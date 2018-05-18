@@ -25,7 +25,11 @@ def download_file(url, dest):
 
 
 def _download_file(url, dest):
-    os.makedirs(dest, exist_ok=True)
+    try:
+        os.makedirs(dest)
+    except:
+        print('Already downloaded {}'.format(url))
+        return
 
     html_str = requests.get(url).text
     html = BeautifulSoup(html_str, 'html.parser')
