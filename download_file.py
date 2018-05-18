@@ -12,7 +12,6 @@ from pyunpack import Archive
 def download_file(url, dest):
     for i in range(3):
         try:
-            assert False
             _download_file(url, dest)
             return
         except:
