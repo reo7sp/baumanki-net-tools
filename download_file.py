@@ -9,6 +9,8 @@ from pyunpack import Archive
 
 def download_file(url, dest):
     try:
+        os.makedirs(dest, exist_ok=True)
+
         html_str = requests.get(url).text
         html = BeautifulSoup(html_str, 'html.parser')
 
@@ -23,8 +25,6 @@ def download_file(url, dest):
 
 
 def _save_file(url, dest):
-    os.makedirs(dest, exist_ok=True)
-
     with requests.get(url, stream=True) as r:
         filename = re.findall('filename="(.+?)"', r.headers['content-disposition'])[0]
         filepath = os.path.join(dest, filename)

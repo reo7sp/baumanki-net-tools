@@ -2,11 +2,11 @@
 import os
 import requests
 from bs4 import BeautifulSoup
-from download_file import download_file
+from download_subject import download_subject
 from tqdm import tqdm
 
 
-def download_category(url, dest):
+def download_semestr(url, dest):
     try:
         os.makedirs(dest, exist_ok=True)
 
@@ -22,9 +22,9 @@ def download_category(url, dest):
                 continue
             link_str_absolute = 'http://baumanki.net' + link_str_relative
             name = link_el.string
-            download_file(link_str_absolute, os.path.join(dest, name))
+            download_subject(link_str_absolute, os.path.join(dest, name))
     except:
-        print('Failed at category', url)
+        print('Failed at semestr', url)
         raise
 
 
@@ -34,8 +34,8 @@ if __name__ == '__main__':
         url = os.sys.argv[1]
         dest = os.sys.argv[2]
     except AssertionError:
-        print('USAGE: python3 download_category.py URL DEST')
+        print('USAGE: python3 download_semestr.py URL DEST')
         exit(1)
 
-    download_category(url, dest)
+    download_semestr(url, dest)
     
