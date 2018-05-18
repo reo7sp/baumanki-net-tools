@@ -27,8 +27,7 @@ def _download_file(url, dest):
     try:
         os.makedirs(dest)
     except:
-        print('Already downloaded {}'.format(url))
-        return
+        return  # already downloaded
 
     html_str = requests.get(url).text
     html = BeautifulSoup(html_str, 'html.parser')
