@@ -2,26 +2,39 @@
 import os
 import re
 import shutil
+import traceback
+import time
 import requests
 from bs4 import BeautifulSoup
 from pyunpack import Archive
 
 
 def download_file(url, dest):
-    try:
-        os.makedirs(dest, exist_ok=True)
+    for i in range(3):
+        try:
+            assert False
+            _download_file(url, dest)
+            return
+        except:
+            print('Failing at file {}. Retry {}/3...'.format(url, i+1))
+            if i == 0:
+                traceback.print_exc()
+            time.sleep(10)
+    print('Failed at file {}. Skip. Reported to log.txt'.format(url))
+    _report_fail(url)
 
-        html_str = requests.get(url).text
-        html = BeautifulSoup(html_str, 'html.parser')
 
-        link_el = html.find('a', class_='download_bt')
-        link_str_relative = link_el['href'].replace('file-download', 'start-download')
-        link_str_absolute = 'http://baumanki.net' + link_str_relative
+def _download_file(url, dest):
+    os.makedirs(dest, exist_ok=True)
 
-        _save_file(link_str_absolute, dest)
-    except:
-        print('Failed at file', url)
-        raise
+    html_str = requests.get(url).text
+    html = BeautifulSoup(html_str, 'html.parser')
+
+    link_el = html.find('a', class_='download_bt')
+    link_str_relative = link_el['href'].replace('file-download', 'start-download')
+    link_str_absolute = 'http://baumanki.net' + link_str_relative
+
+    _save_file(link_str_absolute, dest)
 
 
 def _save_file(url, dest):
@@ -36,6 +49,16 @@ def _save_file(url, dest):
     Archive(filepath).extractall(filepath_without_ext)
 
     os.remove(filepath)
+
+
+def _report_fail(url):
+    try:
+        with open('log.txt', mode='a') as f:
+            f.write(url)
+            f.write('\n')
+    except:
+        print('Cannot report fail to log.txt')
+        traceback.print_exc()
 
 
 if __name__ == '__main__':
