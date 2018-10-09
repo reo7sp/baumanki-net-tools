@@ -8,6 +8,8 @@ import requests
 from bs4 import BeautifulSoup
 from pyunpack import Archive
 
+from constants import ROOT_URL
+
 
 def download_file(url, dest):
     for i in range(3):
@@ -32,9 +34,9 @@ def _download_file(url, dest):
     html_str = requests.get(url).text
     html = BeautifulSoup(html_str, 'html.parser')
 
-    link_el = html.find('a', class_='download_bt')
+    link_el = html.find('a', class_='fa-file-download-bt')
     link_str_relative = link_el['href'].replace('file-download', 'start-download')
-    link_str_absolute = 'http://baumanki.net' + link_str_relative
+    link_str_absolute = ROOT_URL + link_str_relative
 
     _save_file(link_str_absolute, dest)
 
@@ -73,4 +75,4 @@ if __name__ == '__main__':
         exit(1)
 
     download_file(url, dest)
-    
+
