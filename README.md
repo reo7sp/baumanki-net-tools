@@ -1,6 +1,6 @@
-# baumanki.net tools
+# studizba tools
 
-Скачивает и распаковывает файлы с сайта baumanki.net.
+Скачивает и распаковывает файлы с сайта studizba.com (ранее baumanki.net).
 
 ## Как установить
 
@@ -12,10 +12,10 @@ pip3 install -r requirements.txt
 
 Скачать категорию:
 ```sh
-./download_category.py http://baumanki.net/filearray/high-school/category-***.html ~/Desktop/baumankinet
+./download_category.py ссылка_на_категорию ~/Desktop/studizba
 ```
 
 Скачать один файл:
 ```sh
-./download_file.py http://baumanki.net/filearray/file-info-***.html ~/Desktop/baumankinet
+./download_file.py ссылка_на_файл ~/Desktop/studizba
 ```
