@@ -5,6 +5,8 @@
 ## Как установить
 
 ```sh
+git clone https://github.com/reo7sp/baumanki-net-tools
+cd baumanki-net-tools
 pip3 install -r requirements.txt
 ```
 
